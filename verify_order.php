@@ -18,8 +18,8 @@ $invoice_number_result = $getLatestInvoiceNumberCommand->get_result();
 $row_invoiceNumber = $invoice_number_result->fetch_assoc();
 
 while ($row = $temporaryOrdersResult->fetch_assoc()) {
-    $populateInvoiceDetailsCommand = $connection->prepare("insert into invoice details values(?, ?, ?)");
-    $populateInvoiceDetailsCommand->bind_param("iii", $row_invoiceNumber["latest_invoice_num"], $row["product_id"], $row["amount"]);
+    $populateInvoiceDetailsCommand = $connection->prepare("insert into invoice_details values (?,?,?)");
+    $populateInvoiceDetailsCommand->bind_param("iii", $row["product_id"], $row_invoiceNumber["latest_invoice_num"], $row["amount"]);
     $populateInvoiceDetailsCommand->execute();
 
     $deleteTempOrdersCommand = $connection->prepare("delete from temprorary_place_order where email=?");
